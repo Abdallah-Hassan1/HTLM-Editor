@@ -5,25 +5,28 @@ function consoleViewer() {
 
   let cssCode = "console-output { width: 100%; } mainHTML { display: none; }";
 
-  let text = `${htmlCode}
-  <style>${cssCode}</style>
-  <script>
-  console.log = function (...args) {
-    //originalConsoleLog.apply(console, args);
-    const message = document.createElement("div");
+  let text = `<!docType html>
+  <html>
+    <head><style>${cssCode}</style></head>
+    ${htmlCode}
+    <script>
+    console.log = function (...args) {
+      //originalConsoleLog.apply(console, args);
+      const message = document.createElement("div");
 
-    const ouputMessage = args
-      .map((arg) => {
-        if (typeof arg === "object" && arg != null) return JSON.stringify(arg);
-        return String(arg);
-      })
-      .join(" ");
+      const ouputMessage = args
+        .map((arg) => {
+          if (typeof arg === "object" && arg != null) return JSON.stringify(arg);
+          return String(arg);
+        })
+        .join(" ");
 
-    message.textContent = ouputMessage;
-    document.querySelector("console-output").appendChild(message);
-  };
-  ${document.getElementById("javascriptCode").value}
-  </script>`;
+      message.textContent = ouputMessage;
+      document.querySelector("console-output").appendChild(message);
+    };
+    ${document.getElementById("javascriptCode").value}
+    </script>
+  </html>`;
 
   let consoleIframe = document.querySelector("#console-viewer");
   consoleIframe.remove();
@@ -43,10 +46,11 @@ function update() {
   let htmlCode = document.getElementById("htmlCode").value;
   let cssCode = document.getElementById("cssCode").value;
   let javascriptCode = document.getElementById("javascriptCode").value;
-  let text = `<html>
+  let text = `<!doctype html>
+  <html>
+    <head><style>${cssCode}</style></head>
     <body>
       ${htmlCode}
-      <style>${cssCode}</style>
       <script>${javascriptCode}</script>
     </body>
   </html>`;
@@ -61,4 +65,41 @@ function update() {
   iframe.contentWindow.document.write(text);
   iframe.contentWindow.document.close();
   consoleViewer();
+}
+
+function downloadFile(filename) {
+  let content = `<!doctype html>
+  <html>
+    <head>
+      <title>Real-Time Editor</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <style>
+        ${document.getElementById("cssCode").value}
+      </style>
+    </head>
+    <body>
+      ${document.getElementById("htmlCode").value}
+      <script>
+        ${document.getElementById("javascriptCode").value}
+      </script>
+    </body>
+  </html>`;
+
+  // HTML يحتوي على كود ال  Bolb إنشاء
+  const blob = new Blob([content], { type: "text/html" });
+
+  // Blob موقت لهذا ال  URL إنشاء رابط
+  const url = URL.createObjectURL(blob);
+
+  // مخفي لتنفيذ التحميل <a> إنشاء عنصر
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename; // اسم الملف عند التحميل
+
+  document.body.appendChild(a); // إضافة العنصر
+  a.click(); // الضغط عليه
+  document.body.removeChild(a); // حذف العنصر
+
+  // تنظيف الذاكرة بحذف الرابط المؤقت
+  URL.revokeObjectURL(url);
 }
