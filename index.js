@@ -6,7 +6,9 @@ function update() {
   let text = `<!doctype html>
   <html>
     <head>
-      <style>${cssCode}</style>
+      <style>
+        ${cssCode}
+      </style>
     </head>
     <body style="display: flex; flex-direction: column-reverse;">
       <console-viewer style="border-top: 2px solid #ccc;">
@@ -93,3 +95,7 @@ function downloadFile() {
 }
 
 update();
+
+window.addEventListener("beforeunload", function (event) {
+  event.preventDefault();
+});
