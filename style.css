@@ -1,0 +1,76 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.main {
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  gap: 3px;
+  grid-template-areas: 
+  "editor download download"
+  "editor page-output page-output"
+  ;
+}
+.container {
+  grid-area: editor;
+  background: #e7e7e7;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+.container textarea {
+  background-color: #121212;
+  border: 1px solid #0dddf0;
+  resize: none;
+  width: 100%;
+  height: 33.333%;
+  font-size: 1.4rem;
+  padding: 10px;
+  overflow-y: scroll;
+  color: white;
+}
+.container textarea:focus {
+  outline: none;
+  color: white;
+}
+.iframe-container {
+  grid-area: page-output;
+  background: white;
+  width: 100%;
+  height: 100vh;
+}
+#viewer{
+  border: 2px solid #ccc;
+  width: 100%;
+  height: 100%;
+}
+.download{
+  grid-area: download;
+  cursor: pointer;
+  padding: 10px;
+  margin: 5px;
+  font-size: 25px;
+  background-color: rgba(172, 255, 47, 0.762);
+  width: fit-content;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+@media (max-width: 800px) {
+  .main {
+    grid-template-areas: 
+  "download"
+  "editor"
+  "page-output"
+  }
+  .container,
+  .iframe-container {
+    width: 100%;
+    height: 100vh;
+  }
+}

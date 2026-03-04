@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Real-Time Editor</title>
+    <meta
+      name="description"
+      content="A website for making website using HTML, CSS & JS without any editor"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <div class="main">
+      <div class="download" onclick="downloadFile()">Download HTML file</div>
+      <div class="container">
+        <!-- Text area for Html Code  -->
+        <textarea
+          id="htmlCode"
+          placeholder="Type HTML code here"
+          spellcheck="false"
+          oninput="update()"
+        ></textarea>
+        <!-- Text area for Css Code  -->
+        <textarea
+          id="cssCode"
+          placeholder="Type CSS code here"
+          spellcheck="false"
+          oninput="update()"
+        ></textarea>
+        <!-- Text area for Javascript Code  -->
+        <textarea
+          id="javascriptCode"
+          spellcheck="false"
+          placeholder="Type JavaScript code here"
+          oninput="update()"
+        ></textarea>
+      </div>
+      <div class="iframe-container">
+        <iframe id="viewer"></iframe>
+      </div>
+    </div>
+
+    <script src="index.js"></script>
+  </body>
+</html>
